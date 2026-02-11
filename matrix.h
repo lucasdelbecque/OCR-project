@@ -26,4 +26,15 @@ public:
     Matrix multiply(const Matrix& other) const;
 
     Matrix applyReLU() const;
+
+    Matrix convolve(const Matrix& kernel) const;
+
+    Matrix maxPooling(int step = 2) const;
+
+    Matrix flatten() const;
+
+    bool load(const std::string& filename);
+
 };
+
+Matrix softmax(const Matrix& input);
