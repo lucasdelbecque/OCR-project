@@ -12,7 +12,6 @@ transform = transforms.Compose([
     transforms.ToTensor()
 ])
 
-print("Chargement du dataset avec Augmentation (Simulation main levée)...")
 train_dataset = datasets.MNIST('./data', train=True, download=True, transform=transform)
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=64, shuffle=True)
 
@@ -33,10 +32,9 @@ model = RobustCNN()
 optimizer = optim.Adam(model.parameters(), lr=0.002)
 criterion = nn.CrossEntropyLoss()
 
-print(f"Entraînement Robuste (5 Epochs)...")
 
 model.train()
-for epoch in range(5):
+for epoch in range(10):
     total_loss = 0
     for batch_idx, (data, target) in enumerate(train_loader):
         optimizer.zero_grad()
@@ -45,7 +43,7 @@ for epoch in range(5):
         loss.backward()
         optimizer.step()
         total_loss += loss.item()
-    print(f"Epoch {epoch+1}/5 - Moyenne Loss: {total_loss/len(train_loader):.4f}")
+    print(f"Epoch {epoch+1}/10 - Moyenne Loss: {total_loss/len(train_loader):.4f}")
 
 def save_matrix(filename, data):
     flattened = data.flatten()
@@ -64,5 +62,3 @@ dense_w = model.fc1.weight.data.numpy()
 dense_b = model.fc1.bias.data.numpy()
 save_matrix("dense_weights.txt", dense_w)
 save_matrix("dense_bias.txt", dense_b)
-
-print("Terminé ! Ces poids devraient résister à tes dessins.")
